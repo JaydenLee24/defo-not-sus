@@ -300,7 +300,130 @@ function animateHopeItems() {
 }
 
 /* ════════════════════════════════════════════════════════════
-   8. INIT
+   8. LIGHTBOX
+════════════════════════════════════════════════════════════ */
+const lightbox  = document.getElementById('lightbox');
+const lbImg     = document.getElementById('lbImg');
+const lbCaption = document.getElementById('lbCaption');
+const lbCounter = document.getElementById('lbCounter');
+const lbClose   = document.getElementById('lbClose');
+const lbPrev    = document.getElementById('lbPrev');
+const lbNext    = document.getElementById('lbNext');
+const lbBackdrop= document.getElementById('lbBackdrop');
+
+let lbImages  = []; // { src, alt, caption }
+let lbCurrent = 0;
+
+function openLightbox(images, startIndex) {
+  lbImages  = images;
+  lbCurrent = startIndex;
+  renderLightbox();
+  lightbox.classList.add('open');
+  document.body.style.overflow = 'hidden';
+  lbImg.focus();
+}
+
+function closeLightbox() {
+  lightbox.classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function renderLightbox() {
+  const item = lbImages[lbCurrent];
+  lbImg.src        = item.src;
+  lbImg.alt        = item.alt;
+  lbCaption.textContent = item.caption;
+  lbCounter.textContent = lbImages.length > 1
+    ? `${lbCurrent + 1} / ${lbImages.length}`
+    : '';
+
+  // Sembunyikan panah kalau hanya 1 foto
+  lbPrev.classList.toggle('hidden', lbImages.length <= 1);
+  lbNext.classList.toggle('hidden', lbImages.length <= 1);
+}
+
+function lbShowPrev() {
+  lbCurrent = (lbCurrent - 1 + lbImages.length) % lbImages.length;
+  renderLightbox();
+}
+
+function lbShowNext() {
+  lbCurrent = (lbCurrent + 1) % lbImages.length;
+  renderLightbox();
+}
+
+// Tombol
+lbClose.addEventListener('click', closeLightbox);
+lbBackdrop.addEventListener('click', closeLightbox);
+lbPrev.addEventListener('click', lbShowPrev);
+lbNext.addEventListener('click', lbShowNext);
+
+// Keyboard saat lightbox terbuka
+document.addEventListener('keydown', (e) => {
+  if (!lightbox.classList.contains('open')) return;
+  if (e.key === 'Escape')      closeLightbox();
+  if (e.key === 'ArrowLeft')  { e.stopPropagation(); lbShowPrev(); }
+  if (e.key === 'ArrowRight') { e.stopPropagation(); lbShowNext(); }
+}, true); // capture = true agar tidak bentrok dengan nav global
+
+// Swipe horizontal di lightbox (mobile)
+let lbTouchX = 0;
+lightbox.addEventListener('touchstart', (e) => {
+  lbTouchX = e.touches[0].clientX;
+}, { passive: true });
+lightbox.addEventListener('touchend', (e) => {
+  const diff = lbTouchX - e.changedTouches[0].clientX;
+  if (Math.abs(diff) < 40) return;
+  if (diff > 0) lbShowNext(); else lbShowPrev();
+}, { passive: true });
+
+// Kumpulkan semua foto dari satu swiper ke array
+function getImagesFromSwiper(swiperEl) {
+  const slides = swiperEl.querySelectorAll('.swiper-slide:not(.swiper-slide-duplicate)');
+  return Array.from(slides).map(slide => {
+    const img = slide.querySelector('img');
+    const cap = slide.querySelector('.photo-caption');
+    return {
+      src:     img ? img.src     : '',
+      alt:     img ? img.alt     : '',
+      caption: cap ? cap.textContent : '',
+    };
+  });
+}
+
+// Pasang event klik foto ke semua photo-card
+function initLightboxClicks() {
+  document.querySelectorAll('.photo-swiper').forEach(swiperEl => {
+    swiperEl.addEventListener('click', (e) => {
+      const card = e.target.closest('.photo-card');
+      if (!card) return;
+
+      // Cegah klik saat drag/swipe
+      if (swiperEl._isDragging) return;
+
+      const images = getImagesFromSwiper(swiperEl);
+      if (images.length === 0) return;
+
+      // Cari index foto yang diklik berdasarkan src
+      const clickedImg = card.querySelector('img');
+      let startIdx = images.findIndex(i => i.src === clickedImg.src);
+      if (startIdx < 0) startIdx = 0;
+
+      openLightbox(images, startIdx);
+    });
+  });
+
+  // Tandai saat swiper sedang di-drag agar klik tidak aktif
+  document.querySelectorAll('.photo-swiper').forEach(swiperEl => {
+    swiperEl.addEventListener('touchmove',  () => { swiperEl._isDragging = true;  }, { passive: true });
+    swiperEl.addEventListener('touchend',   () => { setTimeout(() => { swiperEl._isDragging = false; }, 100); }, { passive: true });
+    swiperEl.addEventListener('mousemove',  () => { swiperEl._isDragging = true;  });
+    swiperEl.addEventListener('mouseup',    () => { setTimeout(() => { swiperEl._isDragging = false; }, 100); });
+  });
+}
+
+/* ════════════════════════════════════════════════════════════
+   9. INIT
 ════════════════════════════════════════════════════════════ */
 (function init() {
   buildDots();
@@ -308,4 +431,5 @@ function animateHopeItems() {
   setupScrollObserver();
   initSwiper();
   initDragScroll();
+  initLightboxClicks();
 })();
