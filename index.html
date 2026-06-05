@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- ============================================================
+    GANTI: Ubah judul tab browser sesuai nama penerima
+  ============================================================ -->
+  <title>Selamat Ulang Tahun, Mamah! 🎉</title>
+
+  <!-- Google Fonts: Nunito (body) + Pacifico (display/judul) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,400;0,600;0,700;0,800;0,900;1,400&family=Pacifico&display=swap" rel="stylesheet" />
+
+  <!-- Swiper.js CSS (untuk slideshow foto) -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ══════════════════════════════════════════
+       NAVIGASI: Dot Indicator + Tombol Panah
+  ══════════════════════════════════════════ -->
+  <nav class="main-nav" id="mainNav" aria-label="Navigasi slide">
+    <button class="nav-arrow nav-prev" id="navPrev" aria-label="Slide sebelumnya">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+    </button>
+    <div class="dot-indicator" id="dotIndicator" role="tablist">
+      <!-- Dots dibuat oleh script.js -->
+    </div>
+    <button class="nav-arrow nav-next" id="navNext" aria-label="Slide berikutnya">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+    </button>
+  </nav>
+
+  <!-- ══════════════════════════════════════════
+       WRAPPER SEMUA SLIDE
+  ══════════════════════════════════════════ -->
+  <main class="slides-wrapper" id="slidesWrapper">
+
+    <!-- ══════════════════════════════════════════
+         SLIDE 1 — HERO
+    ══════════════════════════════════════════ -->
+    <section class="slide slide-hero" id="slide-1" data-slide="0">
+
+      <!-- Canvas untuk confetti -->
+      <canvas id="confettiCanvas"></canvas>
+
+      <!-- Balon dekorasi -->
+      <div class="balloons-bg" aria-hidden="true">
+        <span class="balloon b1">🎈</span>
+        <span class="balloon b2">🎀</span>
+        <span class="balloon b3">🎈</span>
+        <span class="balloon b4">🎊</span>
+        <span class="balloon b5">🎈</span>
+        <span class="balloon b6">✨</span>
+      </div>
+
+      <div class="hero-content">
+        <div class="hero-emoji" aria-hidden="true">🎂</div>
+        <p class="hero-subtitle">Hari yang sangat spesial untuk</p>
+
+        <!-- ============================================================
+          GANTI: Ubah nama penerima di bawah ini
+        ============================================================ -->
+        <h1 class="hero-name">Mamah Lia</h1>
+
+        <!-- ============================================================
+          GANTI: Ubah angka umur di bawah ini
+        ============================================================ -->
+        <div class="hero-age-wrap">
+          <span class="hero-age-label">yang ke</span>
+          <span class="hero-age">44</span>
+          <span class="hero-age-label">tahun!</span>
+        </div>
+
+        <p class="hero-tagline">Semoga hari ini penuh kebahagiaan &amp; keajaiban ✨</p>
+
+        <button class="btn-cta" id="btnHeroNext" aria-label="Lihat kenangan">
+          Lihat Kenangan&nbsp;→
+        </button>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════
+         SLIDE 2 — FOTO SI ORANGNYA
+    ══════════════════════════════════════════ -->
+    <section class="slide slide-photos" id="slide-2" data-slide="1">
+      <div class="slide-inner">
+        <div class="section-header">
+          <span class="section-emoji" aria-hidden="true">🌸</span>
+
+          <!-- ============================================================
+            GANTI: Ubah nama penerima di judul slide ini
+          ============================================================ -->
+          <h2 class="section-title">Si Cantik Mamah</h2>
+          <p class="section-desc">Foto-foto mamah yang selalu bikin hati cerah ✨</p>
+        </div>
+
+        <!-- Swiper Slideshow — Foto Si Orangnya -->
+        <div class="swiper photo-swiper swiper-solo">
+          <div class="swiper-wrapper">
+
+            <!-- ============================================================
+              GANTI: Taruh foto-foto SI ORANGNYA saja di sini.
+              Letakkan file foto di folder: foto/solo/
+              Contoh: src="foto/solo/solo1.jpg"
+              Rasio foto bebas, tapi portrait (3:4) atau square (1:1) lebih bagus.
+              Tambah/kurangi <div class="swiper-slide"> sesuai jumlah foto.
+            ============================================================ -->
+
+            <div class="swiper-slide">
+              <div class="photo-card photo-card--solo">
+                <img src="foto/solo/solo1.jpg" alt="Foto Mamah 1" loading="lazy" />
+                <p class="photo-caption">Senyuman mamah selalu jadi yang terindah 😊</p>
+              </div>
+            </div>
+
+            <div class="swiper-slide">
+              <div class="photo-card photo-card--solo">
+                <img src="foto/solo/solo2.jpg" alt="Foto Mamah 2" loading="lazy" />
+                <p class="photo-caption">Glowing seperti biasa ✨</p>
+              </div>
+            </div>
+
+            <div class="swiper-slide">
+              <div class="photo-card photo-card--solo">
+                <img src="foto/solo/solo3.jpg" alt="Foto Mamah 3" loading="lazy" />
+                <p class="photo-caption">Cantiknya luar dalam 💖</p>
+              </div>
+            </div>
+
+            <div class="swiper-slide">
+              <div class="photo-card photo-card--solo">
+                <img src="foto/solo/solo4.png" alt="Foto Mamah 4" loading="lazy" />
+                <p class="photo-caption">Ngeblur dikit hehe😊🌟</p>
+              </div>
+            </div>
+
+            <div class="swiper-slide">
+              <div class="photo-card photo-card--solo">
+                <img src="foto/solo/solo5.jpg" alt="Foto Mamah 5" loading="lazy" />
+                <p class="photo-caption">Miring dikit Cekrek 🎀</p>
+              </div>
+            </div>
+
+            <div class="swiper-slide">
+              <div class="photo-card photo-card--solo">
+                <img src="foto/solo/solo6.jpg" alt="Foto Mamah 6" loading="lazy" />
+                <p class="photo-caption">Glowing lagi 🎀</p>
+              </div>
+            </div>
+
+          </div><!-- /swiper-wrapper -->
+
+          <!-- Navigasi Swiper -->
+          <div class="swiper-button-prev"></div>
+          <div class="swiper-button-next"></div>
+          <div class="swiper-pagination"></div>
+        </div><!-- /swiper -->
+
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════
+         SLIDE 3 — FOTO BERSAMA ORANG TERSAYANG
+    ══════════════════════════════════════════ -->
+    <section class="slide slide-together" id="slide-3" data-slide="2">
+      <div class="slide-inner">
+        <div class="section-header">
+          <span class="section-emoji" aria-hidden="true">🫶</span>
+          <h2 class="section-title">Bersama Orang Tersayang</h2>
+          <p class="section-desc">Momen-momen hangat yang selalu dikenang di hati</p>
+        </div>
+
+        <!-- Swiper Slideshow — Foto Bersama -->
+        <div class="swiper photo-swiper swiper-together">
+          <div class="swiper-wrapper">
+
+            <!-- ============================================================
+              GANTI: Taruh foto-foto BERSAMA (bareng keluarga/sahabat/dll).
+              Letakkan file foto di folder: foto/bersama/
+              Contoh: src="foto/bersama/bareng1.jpg"
+              Rasio landscape (3:2 atau 4:3) lebih cocok untuk foto grup.
+              Tambah/kurangi <div class="swiper-slide"> sesuai jumlah foto.
+            ============================================================ -->
+
+            <div class="swiper-slide">
+              <div class="photo-card photo-card--together">
+                <img src="foto/bersama/bareng1.jpg" alt="Foto bersama 1" loading="lazy" />
+                <p class="photo-caption">Foto yang cukup Cinematic kan? 💞</p>
+              </div>
+            </div>
+
+            <div class="swiper-slide">
+              <div class="photo-card photo-card--together">
+                <img src="foto/bersama/bareng2.jpg" alt="Foto bersama 2" loading="lazy" />
+                <p class="photo-caption">Ini juga 🌈</p>
+              </div>
+            </div>
+
+            <div class="swiper-slide">
+              <div class="photo-card photo-card--together">
+                <img src="foto/bersama/bareng3.jpg" alt="Foto bersama 3" loading="lazy" />
+                <p class="photo-caption">Momen "cukup" lengkap❤️</p>
+              </div>
+            </div>
+
+            <div class="swiper-slide">
+              <div class="photo-card photo-card--together">
+                <img src="foto/bersama/bareng4.jpg" alt="Foto bersama 4" loading="lazy" />
+                <p class="photo-caption">Momen yang selalu ada di hati 🌸</p>
+              </div>
+            </div>
+
+            <div class="swiper-slide">
+              <div class="photo-card photo-card--together">
+                <img src="foto/bersama/bareng5.jpg" alt="Foto bersama 5" loading="lazy" />
+                <p class="photo-caption">Apapun yang terjadi..Tetep tersenyum ya❤️</p>
+              </div>
+            </div>
+
+            <div class="swiper-slide">
+              <div class="photo-card photo-card--together">
+                <img src="foto/bersama/bareng6.jpg" alt="Foto bersama 6" loading="lazy" />
+                <p class="photo-caption">Setiap momen bersama mamah selalu berharga ✨</p>
+              </div>
+            </div>
+ 
+            <div class="swiper-slide">
+              <div class="photo-card photo-card--together">
+                <img src="foto/bersama/bareng7.jpg" alt="Foto bersama 7" loading="lazy" />
+                <p class="photo-caption">Gaya juga ni 🌟</p>
+              </div>
+            </div>
+ 
+            <div class="swiper-slide">
+              <div class="photo-card photo-card--together">
+                <img src="foto/bersama/bareng8.jpg" alt="Foto bersama 8" loading="lazy" />
+                <p class="photo-caption">Kenangan yang akan selalu diingat 💛</p>
+              </div>
+            </div>
+ 
+            <div class="swiper-slide">
+              <div class="photo-card photo-card--together">
+                <img src="foto/bersama/bareng9.jpg" alt="Foto bersama 9" loading="lazy" />
+                <p class="photo-caption">Kebahagiaan itu lebih kerasa waktu bersama 🎉</p>
+              </div>
+            </div>
+ 
+            <div class="swiper-slide">
+              <div class="photo-card photo-card--together">
+                <img src="foto/bersama/bareng10.jpg" alt="Foto bersama 10" loading="lazy" />
+                <p class="photo-caption">Terima kasih udah ada di hidup kami 💖</p>
+              </div>
+            </div>
+ 
+            <div class="swiper-slide">
+              <div class="photo-card photo-card--together">
+                <img src="foto/bersama/bareng11.jpg" alt="Foto bersama 11" loading="lazy" />
+                <p class="photo-caption">Semoga kita bisa terus menciptakan kenangan indah ya mah</p>
+              </div>
+            </div>
+
+          </div><!-- /swiper-wrapper -->
+
+          <!-- Navigasi Swiper -->
+          <div class="swiper-button-prev"></div>
+          <div class="swiper-button-next"></div>
+          <div class="swiper-pagination"></div>
+        </div><!-- /swiper -->
+
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════
+         SLIDE 4 — UCAPAN
+    ══════════════════════════════════════════ -->
+    <section class="slide slide-wishes" id="slide-4" data-slide="3">
+      <div class="slide-inner">
+        <div class="section-header">
+          <span class="section-emoji" aria-hidden="true">💌</span>
+          <h2 class="section-title">Ucapan dari Kita</h2>
+          <p class="section-desc">Orang-orang yang menyayangi mamah selamanya</p>
+        </div>
+
+        <div class="wishes-track-outer">
+          <div class="wishes-track" id="wishesTrack">
+
+            <!-- ============================================================
+              GANTI: Ubah nama, ucapan, dan emoji sesuai pengirim asli.
+              Untuk menambah kartu, duplikasi satu blok <div class="wish-card">
+            ============================================================ -->
+
+            <div class="wish-card" data-color="black">
+              <div class="wish-avatar">🧑</div>
+              <p class="wish-sender">Aa</p>
+              <p class="wish-text">"Mamah adalah Ibu terbaik yang pernah aa miliki. Semoga sehat selalu, bahagia, dan dimudahkan segala urusannya. Happy birthday!💪"</p>
+            </div>
+
+            <div class="wish-card" data-color="blue">
+              <div class="wish-avatar">🧑</div>
+              <p class="wish-sender">Hafiz</p>
+              <p class="wish-text">"Selamat ulang tahun mamah!, semoga sehat selalu, dan diberikan rezeki yang banyak, terima kasih udah jadi mamah terbaik sedunia"</p>
+            </div>
+
+            <div class="wish-card" data-color="purple">
+              <div class="wish-avatar">🧑</div>
+              <p class="wish-sender">Aa ka</p>
+              <p class="wish-text">"Happy birthday bestie!! Makasih udah selalu ada, selalu dengerin cerita gila-gilaan aku. Semoga tahun ini makin glowing, makin sukses, dan makin bahagia! Aku sayang kamu! 🥰"</p>
+            </div>
+
+            <div class="wish-card" data-color="green">
+              <div class="wish-avatar">👨</div>
+              <p class="wish-sender">Babeh</p>
+              <p class="wish-text">"Barakallahu fii umrik, istriku Lia Malia sayang. Terima kasih sudah menjadi pasangan hidup terbaik dan tempat ternyaman untuk pulang. Semoga kamu selalu bahagia, sehat selalu, dan semua impianmu tercapai. Aku mencintaimu hari ini, besok, dan selamanya</p>
+            </div>
+
+          </div><!-- /wishes-track -->
+        </div><!-- /wishes-track-outer -->
+
+        <!-- Hint scroll -->
+        <p class="wishes-hint" aria-hidden="true">← Geser buat liat lebih banyak ucapan →</p>
+
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════
+         SLIDE 5 — HARAPAN & DOA
+    ══════════════════════════════════════════ -->
+    <section class="slide slide-hopes" id="slide-5" data-slide="4">
+      <div class="slide-inner">
+        <div class="section-header">
+          <span class="section-emoji" aria-hidden="true">🌟</span>
+          <h2 class="section-title">Harapan & Doa</h2>
+
+          <!-- ============================================================
+            GANTI: Ubah nama penerima di bawah ini
+          ============================================================ -->
+          <p class="section-desc">Untuk Mama. di hari yang istimewa ini</p>
+        </div>
+
+        <div class="hopes-list" id="hopesList">
+
+          <!-- ============================================================
+            GANTI: Ubah isi doa/harapan sesuai keinginanmu.
+            Untuk menambah item, duplikasi satu blok <div class="hope-item">
+          ============================================================ -->
+
+          <div class="hope-item" data-index="0">
+            <span class="hope-icon" aria-hidden="true">💖</span>
+            <p>Semoga selalu sehat jasmani dan rohani, dan hidupmu selalu penuh dengan kebahagiaan yang tulus.</p>
+          </div>
+
+          <div class="hope-item" data-index="1">
+            <span class="hope-icon" aria-hidden="true">🌈</span>
+            <p>Semoga setiap impian dan cita-citamu tercapai satu per satu, lebih indah dari yang pernah kamu bayangkan.</p>
+          </div>
+
+          <div class="hope-item" data-index="2">
+            <span class="hope-icon" aria-hidden="true">✨</span>
+            <p>Semoga dikelilingi oleh orang-orang yang benar-benar mencintai dan mendukungmu sepenuh hati.</p>
+          </div>
+
+          <div class="hope-item" data-index="3">
+            <span class="hope-icon" aria-hidden="true">🚀</span>
+            <p>Semoga bertambahnya usiamu membawa berkah, menjadikanmu istri dan ibu yang semakin luar biasa, dan semoga Allah SWT selalu melimpahkan rahmat-Nya dalam rumah tangga kita.</p>
+          </div>
+
+          <div class="hope-item" data-index="4">
+            <span class="hope-icon" aria-hidden="true">🙏</span>
+            <p>Semoga Allah SWT selalu melindungi dan memberkahi setiap hari-harimu. Panjang umur, ya sayang!</p>
+          </div>
+
+          <div class="hope-item" data-index="5">
+            <span class="hope-icon" aria-hidden="true">🎂</span>
+            <p>Selamat ulang tahun yang ke-22! Tahun ini pasti akan jadi tahun terbaik dalam hidupmu. We love you!</p>
+          </div>
+
+        </div><!-- /hopes-list -->
+
+        <!-- Tombol confetti lagi -->
+        <button class="btn-celebrate" id="btnCelebrate" aria-label="Rayakan">
+          🎉 Rayakan Lagi!
+        </button>
+
+      </div>
+    </section>
+
+  </main><!-- /slides-wrapper -->
+
+  <!-- ══════════════════════════════════════════
+       LIBRARIES (CDN)
+  ══════════════════════════════════════════ -->
+  <!-- canvas-confetti -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+  <!-- Swiper.js -->
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+  <script src="script.js"></script>
+</body>
+</html>
