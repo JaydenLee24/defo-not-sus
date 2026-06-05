@@ -341,13 +341,25 @@ a { text-decoration: none; }
   border-radius: 20px;
   overflow: hidden;
   box-shadow: 0 8px 30px rgba(0,0,0,0.10);
-  transition: transform 0.3s;
+  transition: transform 0.3s, box-shadow 0.3s;
+  cursor: zoom-in;
 }
 .swiper-slide-active .photo-card { transform: scale(1.02); }
+.photo-card:hover { box-shadow: 0 12px 40px rgba(0,0,0,0.16); }
 
 .photo-card img {
   width: 100%;
+  height: auto;       /* tinggi ikut proporsi asli, tidak di-crop */
+  display: block;
+  object-fit: contain;
+}
+
+/* override rule di bawah agar tidak bentrok */
+.photo-card--solo img,
+.photo-card--together img {
+  width: 100%;
   height: auto;
+  object-fit: contain;
   display: block;
 }
 
@@ -580,11 +592,13 @@ a { text-decoration: none; }
 
   .photo-swiper { max-width: 100%; }
   .swiper-button-prev,
-  .swiper-button-next { display: none; } /* gesek aja di mobile */
+  .swiper-button-next { display: none; }
 
   .wish-card { width: clamp(230px, 78vw, 280px); }
 
-  .video-wrapper { max-width: 100%; }
+  /* Lightbox nav lebih kecil di HP */
+  .lb-arrow { width: 40px; height: 40px; font-size: 1.2rem; }
+  .lb-close { width: 38px; height: 38px; font-size: 1.3rem; top: 14px; right: 14px; }
 }
 
 /* ─── RESPONSIVE: TABLET ────────────────────────────────────── */
@@ -599,4 +613,141 @@ a { text-decoration: none; }
     animation-duration: 0.01ms !important;
     transition-duration: 0.01ms !important;
   }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   LIGHTBOX
+═══════════════════════════════════════════════════════════════ */
+.lightbox {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Saat aktif */
+.lightbox.open { display: flex; }
+
+/* Backdrop blur */
+.lb-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  animation: lbFadeIn 0.25s ease both;
+}
+
+/* Container foto */
+.lb-content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  max-width: min(90vw, 900px);
+  max-height: 90dvh;
+  max-height: 90vh;
+  animation: lbPopIn 0.28s cubic-bezier(0.34,1.46,0.64,1) both;
+}
+
+.lb-img {
+  display: block;
+  max-width: 100%;
+  max-height: 78dvh;
+  max-height: 78vh;
+  width: auto;
+  height: auto;
+  border-radius: 16px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+  object-fit: contain;
+}
+
+.lb-caption {
+  color: rgba(255,255,255,0.88);
+  font-family: var(--font-body);
+  font-size: 0.92rem;
+  font-weight: 700;
+  font-style: italic;
+  text-align: center;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.5);
+  padding: 0 20px;
+}
+
+/* Counter — "3 / 6" */
+.lb-counter {
+  position: absolute;
+  top: -36px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: rgba(255,255,255,0.6);
+  font-size: 0.82rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  white-space: nowrap;
+}
+
+/* Tombol tutup */
+.lb-close {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 2;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.15);
+  border: 1.5px solid rgba(255,255,255,0.3);
+  color: #fff;
+  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+  line-height: 1;
+}
+.lb-close:hover { background: rgba(255,255,255,0.28); transform: scale(1.1) rotate(90deg); }
+
+/* Tombol panah kiri/kanan */
+.lb-arrow {
+  position: fixed;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.15);
+  border: 1.5px solid rgba(255,255,255,0.3);
+  color: #fff;
+  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+  user-select: none;
+}
+.lb-arrow:hover  { background: rgba(255,255,255,0.28); }
+.lb-prev { left: 16px; }
+.lb-prev:hover  { transform: translateY(-50%) translateX(-3px); }
+.lb-next { right: 16px; }
+.lb-next:hover  { transform: translateY(-50%) translateX(3px); }
+.lb-arrow:active { transform: translateY(-50%) scale(0.93); }
+
+/* Sembunyikan panah kalau cuma 1 foto */
+.lb-arrow.hidden { display: none; }
+
+@keyframes lbFadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes lbPopIn {
+  from { opacity: 0; transform: scale(0.88); }
+  to   { opacity: 1; transform: scale(1); }
 }
